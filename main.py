@@ -3,6 +3,7 @@ import time
 import pyautogui
 import pyperclip
 import re
+import keyboard
 
 # Load user32.dll which contains system-wide API functions
 user32 = ctypes.windll.user32
@@ -11,6 +12,7 @@ user32 = ctypes.windll.user32
 IDC_HAND = 32649
 SLEEP_TIME = 3
 
+
 class CURSORINFO(ctypes.Structure):
     _fields_ = [("cbSize", ctypes.c_ulong),
                 ("flags", ctypes.c_ulong),
@@ -18,6 +20,7 @@ class CURSORINFO(ctypes.Structure):
                 ("ptScreenPos", ctypes.c_int * 2)]
 
 class LinkCC:
+
     def __init__(self):
         self.last_cursor_shape = None
 
@@ -64,7 +67,10 @@ class LinkCC:
 # Create an instance of the LinkCC class
 link_cc = LinkCC()
 
-# Call the function to check the cursor shape
+# Call the function to check the cursor shape and exit prgm if spacebar is pressed
 while True:
     link_cc.get_cursor_shape()
     time.sleep(SLEEP_TIME)
+    if keyboard.is_pressed('ctrl'): # actin wierd hafta fix
+        print("ctrl pressed. Exiting...")
+        break
